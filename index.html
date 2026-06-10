@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logowanie - HelpDesk Pro</title>
+    <link href="assets/favicon.svg" rel="icon" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="sass/main.css" />
+  </head>
+  <body>
+    <main class="loginPage">
+      <section class="loginPage__card">
+        <div class="loginPage__card__upper">
+          <div class="loginPage__card__upper__header">
+            <div class="loginPage__card__upper__header__iconBox">
+              <svg class="icon">
+                <use href="assets/icons.svg#support"></use>
+              </svg>
+            </div>
+            <h1 class="loginPage__card__upper__header__title">IT HelpDesk</h1>
+          </div>
+          <p class="loginPage__card__upper__text">
+            Zaloguj się do systemu wsparcia
+          </p>
+          <form class="form" id="loginForm">
+            <div class="form__group">
+              <label class="form__group__label" for="email">Adres e-mail</label
+              ><input
+                class="form__group__input"
+                id="email"
+                type="email"
+                placeholder="jan.kowalski@firma.pl"
+                required
+              />
+            </div>
+            <div class="form__group">
+              <label class="form__group__label" for="password">Hasło</label
+              ><input
+                class="form__group__input"
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <p class="form__error" id="loginError" aria-live="polite"></p>
+            <div class="loginOptions">
+              <a class="loginOptions__link" href="#">Nie pamiętam hasła</a>
+            </div>
+            <button class="primaryButton" type="submit">Zaloguj się</button>
+          </form>
+        </div>
+        <div class="loginPage__card__bottom">
+          Konta demonstracyjne: użytkownik a@a.a / a, technik b@b.b / b
+        </div>
+      </section>
+    </main>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

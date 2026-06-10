@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Panel technika - HelpDesk Pro</title>
+    <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link href="../sass/main.css" rel="stylesheet" />
+  </head>
+  <body data-page="technician-dashboard" data-required-role="technician">
+    <div class="app">
+      <aside class="app__sidebar" id="sidebar">
+        <div class="app__sidebar__brand">
+          <div class="app__sidebar__brand__iconBox">
+            <svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#support"></use>
+            </svg>
+          </div>
+          <div class="app__sidebar__brand__textBox">
+            <h1 class="app__sidebar__brand__textBox__title">HelpDesk Pro</h1>
+            <p class="app__sidebar__brand__textBox__subtitle">
+              IT Support System
+            </p>
+          </div>
+        </div>
+        <nav class="app__sidebar__navigation">
+          <a
+            class="app__sidebar__navigation__link app__sidebar__navigation__link--active"
+            href="technician-dashboard.html"
+            ><svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#dashboard"></use></svg
+            ><span>Dashboard</span></a
+          ><a
+            class="app__sidebar__navigation__link"
+            href="technician-all-tickets.html"
+            ><svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#ticket"></use></svg
+            ><span>Wszystkie zgłoszenia</span></a
+          ><a
+            class="app__sidebar__navigation__link"
+            href="technician-assigned.html"
+            ><svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#user"></use></svg
+            ><span>Przypisane do mnie</span></a
+          >
+        </nav>
+        <div class="app__sidebar__footer">
+          <a class="app__sidebar__navigation__link" href="../index.html"
+            ><svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#logout"></use></svg
+            ><span>Wyloguj</span></a
+          >
+        </div>
+      </aside>
+      <div class="app__overlay" id="sidebarOverlay"></div>
+      <div class="app__content">
+        <header class="app__topbar">
+          <div class="app__topbar__left">
+            <button
+              aria-label="Otwórz menu"
+              class="app__topbar__left__menuButton"
+              id="menuButton"
+            >
+              <svg aria-hidden="true" class="icon">
+                <use href="../assets/icons.svg#menu"></use>
+              </svg>
+            </button>
+            <h2 class="app__topbar__left__title">Panel technika</h2>
+          </div>
+          <div class="app__topbar__right">
+            <div class="app__topbar__right__separator"></div>
+            <div class="app__topbar__right__profile">
+              <div class="app__topbar__right__profile__textBox">
+                <p class="app__topbar__right__profile__textBox__name">
+                  Jan Kowalski
+                </p>
+                <p class="app__topbar__right__profile__textBox__role">
+                  Technik IT
+                </p>
+              </div>
+              <div class="app__topbar__right__profile__avatar">JK</div>
+            </div>
+          </div>
+        </header>
+        <main class="app__main">
+          <section class="app__main__welcome">
+            <div class="app__main__welcome__textBox">
+              <h1 class="app__main__welcome__textBox__title">Witaj, Jan!</h1>
+              <p class="app__main__welcome__textBox__text">
+                Oto aktualny stan zgłoszeń na Twojej zmianie.
+              </p>
+            </div>
+          </section>
+          <section class="statsGrid">
+            <article class="statsGrid__card">
+              <div class="statsGrid__card__upper">
+                <p class="statsGrid__card__upper__title">Nowe zgłoszenia</p>
+                <div
+                  class="statsGrid__card__upper__iconBox statsGrid__card__upper__iconBox--danger"
+                >
+                  <svg aria-hidden="true" class="icon">
+                    <use href="../assets/icons.svg#alert"></use>
+                  </svg>
+                </div>
+              </div>
+              <p class="statsGrid__card__number" data-stat-value="new">12</p>
+              <p class="statsGrid__card__note statsGrid__card__note--danger">
+                Na podstawie zgłoszeń
+              </p>
+            </article>
+            <article class="statsGrid__card">
+              <div class="statsGrid__card__upper">
+                <p class="statsGrid__card__upper__title">Przypisane do mnie</p>
+                <div class="statsGrid__card__upper__iconBox">
+                  <svg aria-hidden="true" class="icon">
+                    <use href="../assets/icons.svg#user"></use>
+                  </svg>
+                </div>
+              </div>
+              <p class="statsGrid__card__number" data-stat-value="assigned">
+                5
+              </p>
+              <p class="statsGrid__card__note">Na podstawie zgłoszeń</p>
+            </article>
+            <article class="statsGrid__card">
+              <div class="statsGrid__card__upper">
+                <p class="statsGrid__card__upper__title">W trakcie</p>
+                <div class="statsGrid__card__upper__iconBox">
+                  <svg aria-hidden="true" class="icon">
+                    <use href="../assets/icons.svg#clock"></use>
+                  </svg>
+                </div>
+              </div>
+              <p class="statsGrid__card__number" data-stat-value="progress">
+                8
+              </p>
+              <p class="statsGrid__card__note statsGrid__card__note--primary">
+                Na podstawie zgłoszeń
+              </p>
+            </article>
+            <article class="statsGrid__card">
+              <div class="statsGrid__card__upper">
+                <p class="statsGrid__card__upper__title">Zakończone</p>
+                <div
+                  class="statsGrid__card__upper__iconBox statsGrid__card__upper__iconBox--success"
+                >
+                  <svg aria-hidden="true" class="icon">
+                    <use href="../assets/icons.svg#check"></use>
+                  </svg>
+                </div>
+              </div>
+              <p class="statsGrid__card__number" data-stat-value="resolved">
+                14
+              </p>
+              <p class="statsGrid__card__note">Na podstawie zgłoszeń</p>
+            </article>
+          </section>
+          <section class="toolbar">
+            <div class="toolbar__search">
+              <input
+                class="toolbar__search__input"
+                id="ticketSearch"
+                placeholder="Szukaj po ID lub tytule..."
+                type="search"
+              />
+            </div>
+            <div class="toolbar__filters">
+              <select class="toolbar__filters__select" id="statusFilter">
+                <option disabled="" selected="" value="">Status</option>
+                <option value="all">Wszystkie</option>
+                <option value="Nowe">Nowe</option>
+                <option value="W trakcie">W trakcie</option>
+                <option value="Oczekuje na odpowiedź">
+                  Oczekuje na odpowiedź
+                </option>
+                <option value="Zakończone">Zakończone</option>
+                <option value="Zamknięte">Zamknięte</option></select
+              ><select class="toolbar__filters__select" id="categoryFilter">
+                <option disabled="" selected="" value="">Kategoria</option>
+                <option value="all">Wszystkie</option>
+                <option value="Sieć">Sieć</option>
+                <option value="Sprzęt">Sprzęt</option>
+                <option value="Oprogramowanie">Oprogramowanie</option>
+                <option value="Konto użytkownika">
+                  Konto użytkownika
+                </option></select
+              ><select class="toolbar__filters__select" id="priorityFilter">
+                <option disabled="" selected="" value="">Priorytet</option>
+                <option value="all">Wszystkie</option>
+                <option value="Niski">Niski</option>
+                <option value="Średni">Średni</option>
+                <option value="Wysoki">Wysoki</option></select
+              ><button
+                aria-label="Wyczyść filtry"
+                class="toolbar__filters__resetButton"
+                id="resetFiltersButton"
+                type="button"
+              >
+                <svg aria-hidden="true" class="icon">
+                  <use href="../assets/icons.svg#refresh"></use>
+                </svg>
+              </button>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel__header">
+              <h3 class="panel__header__title">Wszystkie zgłoszenia</h3>
+            </div>
+            <div class="panel__tableContainer">
+              <table class="ticketsTable">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Temat</th>
+                    <th>Kategoria</th>
+                    <th>Priorytet</th>
+                    <th>Status</th>
+                    <th>Data</th>
+                    <th>Akcja</th>
+                  </tr>
+                </thead>
+                <tbody id="ticketsTableBody"></tbody>
+              </table>
+            </div>
+            <div class="panel__footer">
+              <span id="paginationSummary"
+                >Wyświetlanie 1 do 3 z 12 zgłoszeń</span
+              >
+              <div class="pagination" id="pagination"></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="../js/main.js" type="module"></script>
+  </body>
+</html>

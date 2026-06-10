@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Przekierowanie</title>
+    <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml" />
+  </head>
+  <body>
+    <script>
+      const role = localStorage.getItem("helpDeskRole");
+      window.location.replace(
+        role === "technician"
+          ? "technician-ticket-details.html"
+          : "user-ticket-details.html",
+      );
+    </script>
+  </body>
+</html>

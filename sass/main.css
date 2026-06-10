@@ -1,0 +1,1408 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  color: #191a22;
+  background-color: #f8f7ff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(0, 40, 142, 0.22);
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.statusBadge,
+.priorityBadge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.35em 0.75em;
+  font-size: 0.78em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.statusBadge--new,
+.priorityBadge--new {
+  background-color: #dce9ff;
+  color: #315b9e;
+}
+.statusBadge--progress,
+.priorityBadge--progress {
+  background-color: #dde4ff;
+  color: #1235ae;
+}
+.statusBadge--waiting,
+.priorityBadge--waiting {
+  background-color: #fff2b5;
+  color: #7d5800;
+}
+.statusBadge--resolved,
+.priorityBadge--resolved {
+  background-color: #dcf7e6;
+  color: #137333;
+}
+.statusBadge--closed, .statusBadge--low,
+.priorityBadge--closed,
+.priorityBadge--low {
+  background-color: #e7e8ef;
+  color: #4a4d59;
+}
+.statusBadge--medium,
+.priorityBadge--medium {
+  background-color: #ffe7d1;
+  color: #8f3b00;
+}
+.statusBadge--high,
+.priorityBadge--high {
+  background-color: #ffdddd;
+  color: #a51010;
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 42px;
+  border-radius: 9px;
+  border: none;
+  padding: 0.7em 1.25em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s, transform 0.25s;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6em;
+}
+.primaryButton:active,
+.secondaryButton:active {
+  transform: scale(0.98);
+}
+
+.primaryButton {
+  color: white;
+  background-color: #3659d9;
+}
+.primaryButton:hover {
+  background-color: #5270e6;
+}
+
+.secondaryButton {
+  color: #3659d9;
+  background-color: #ffffff;
+  border: 1px solid #c9cad8;
+}
+.secondaryButton:hover {
+  background-color: #f1f0f9;
+}
+
+.loginPage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  background: radial-gradient(circle at top right, #eef1ff 0%, #f8f7ff 48%, #f6f4ff 100%);
+}
+.loginPage__card {
+  width: 100%;
+  max-width: 460px;
+  background-color: #ffffff;
+  border: 1px solid #c9cad8;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(29, 34, 59, 0.12);
+}
+.loginPage__card__upper {
+  padding: 2.5em 2.2em 2em;
+}
+.loginPage__card__upper__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.65em;
+  margin-bottom: 0.75em;
+}
+.loginPage__card__upper__header__iconBox {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #3659d9;
+}
+.loginPage__card__upper__header__title {
+  font-size: 1.7em;
+  font-weight: 800;
+}
+.loginPage__card__upper__text {
+  text-align: center;
+  color: #555866;
+  margin-bottom: 2em;
+}
+.loginPage__card__bottom {
+  background-color: #ecebf4;
+  border-top: 1px solid #c9cad8;
+  padding: 1.25em;
+  text-align: center;
+  color: #555866;
+}
+.loginPage__card__bottom a {
+  color: #3659d9;
+  font-weight: 700;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25em;
+}
+.form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1em;
+}
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.form__group__label {
+  font-size: 0.82em;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.form__group__input, .form__group__textarea, .form__group__select {
+  width: 100%;
+  border: 1px solid #c9cad8;
+  border-radius: 9px;
+  background-color: #fbfaff;
+  color: #191a22;
+  padding: 0.85em 1em;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.form__group__input:focus, .form__group__textarea:focus, .form__group__select:focus {
+  outline: none;
+  border-color: #3659d9;
+  box-shadow: 0 0 0 3px rgba(0, 40, 142, 0.12);
+}
+.form__group__textarea {
+  min-height: 170px;
+  resize: vertical;
+}
+.form__group__select {
+  appearance: none;
+  padding-right: 3em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23555866' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9em center;
+  background-size: 18px;
+}
+.form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75em;
+  padding-top: 1em;
+  border-top: 1px solid #c9cad8;
+}
+
+.loginOptions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 0.9em;
+}
+.loginOptions__link {
+  color: #3659d9;
+  font-weight: 700;
+}
+
+.uploadBox {
+  min-height: 190px;
+  border: 2px dashed #c9cad8;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.65em;
+  color: #555866;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+.uploadBox:hover {
+  border-color: #3659d9;
+  background-color: #f6f7ff;
+}
+.uploadBox__icon {
+  width: 42px;
+  height: 42px;
+}
+.uploadBox__mainText {
+  color: #3659d9;
+  font-weight: 800;
+}
+.uploadBox__subText {
+  font-size: 0.8em;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+}
+.app__sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  width: 260px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-right: 1px solid #c9cad8;
+  transition: transform 0.3s;
+}
+.app__sidebar__brand {
+  min-height: 94px;
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  padding: 1.4em;
+  border-bottom: 1px solid #c9cad8;
+}
+.app__sidebar__brand__iconBox {
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #3659d9;
+}
+.app__sidebar__brand__textBox__title {
+  color: #3659d9;
+  font-size: 1.28em;
+  font-weight: 800;
+}
+.app__sidebar__brand__textBox__subtitle {
+  margin-top: 0.2em;
+  color: #555866;
+  font-size: 0.72em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.app__sidebar__navigation {
+  flex: 1;
+  padding: 1em 0.5em;
+  overflow-y: auto;
+}
+.app__sidebar__navigation__link {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  padding: 0 1em;
+  margin-bottom: 0.35em;
+  color: #252838;
+  border-left: 4px solid transparent;
+  border-radius: 0 9px 9px 0;
+  font-weight: 600;
+  transition: color 0.25s, background-color 0.25s;
+}
+.app__sidebar__navigation__link:hover, .app__sidebar__navigation__link--active {
+  color: #3659d9;
+  background-color: #edf2ff;
+}
+.app__sidebar__navigation__link--active {
+  border-left-color: #3659d9;
+}
+.app__sidebar__footer {
+  padding: 0.75em;
+  border-top: 1px solid #c9cad8;
+}
+.app__overlay {
+  display: none;
+}
+.app__content {
+  width: calc(100% - 260px);
+  min-height: 100vh;
+  margin-left: 260px;
+}
+.app__topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5em;
+  background-color: rgba(248, 247, 255, 0.96);
+  border-bottom: 1px solid #c9cad8;
+  backdrop-filter: blur(10px);
+}
+.app__topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+.app__topbar__left__menuButton {
+  display: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.app__topbar__left__title {
+  color: #3659d9;
+  font-size: 1.15em;
+  font-weight: 800;
+}
+.app__topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+.app__topbar__right__iconButton {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+}
+.app__topbar__right__iconButton:hover {
+  background-color: #f1f0f9;
+}
+.app__topbar__right__separator {
+  width: 1px;
+  height: 34px;
+  background-color: #c9cad8;
+}
+.app__topbar__right__profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+.app__topbar__right__profile__textBox {
+  text-align: right;
+}
+.app__topbar__right__profile__textBox__name {
+  font-weight: 700;
+}
+.app__topbar__right__profile__textBox__role {
+  margin-top: 0.2em;
+  color: #555866;
+  font-size: 0.72em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.app__topbar__right__profile__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dce8ff;
+  color: #3659d9;
+  border: 1px solid #c9cad8;
+  font-weight: 800;
+}
+.app__main {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 1.5em;
+}
+.app__main__welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1.5em;
+}
+.app__main__welcome--card {
+  padding: 1.5em;
+  background-color: #ffffff;
+  border: 1px solid #c9cad8;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(30, 32, 50, 0.08);
+}
+.app__main__welcome__textBox__title {
+  font-size: 1.75em;
+  font-weight: 800;
+}
+.app__main__welcome__textBox__text {
+  margin-top: 0.35em;
+  color: #555866;
+  font-size: 1.05em;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1em;
+  margin-bottom: 1.5em;
+}
+.statsGrid__card {
+  min-height: 142px;
+  padding: 1.15em;
+  background-color: #ffffff;
+  border: 1px solid #c9cad8;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(30, 32, 50, 0.08);
+}
+.statsGrid__card__upper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.statsGrid__card__upper__title {
+  color: #343744;
+  font-size: 0.9em;
+  font-weight: 700;
+}
+.statsGrid__card__upper__iconBox {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e5edff;
+  color: #3659d9;
+}
+.statsGrid__card__upper__iconBox--danger {
+  background-color: #ffe0df;
+  color: #ba1a1a;
+}
+.statsGrid__card__upper__iconBox--warning {
+  background-color: #fff1b8;
+  color: #b26a00;
+}
+.statsGrid__card__upper__iconBox--success {
+  background-color: #dff7e7;
+  color: #137333;
+}
+.statsGrid__card__number {
+  margin-top: 0.35em;
+  font-size: 2.25em;
+  font-weight: 800;
+}
+.statsGrid__card__note {
+  margin-top: 1em;
+  color: #555866;
+  font-size: 0.78em;
+  font-weight: 700;
+}
+.statsGrid__card__note--danger {
+  color: #ba1a1a;
+}
+.statsGrid__card__note--primary {
+  color: #3659d9;
+}
+
+.toolbar,
+.panel,
+.ticketHeader,
+.ticketAside {
+  background-color: #ffffff;
+  border: 1px solid #c9cad8;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(30, 32, 50, 0.08);
+}
+
+.toolbar {
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1.5em;
+}
+.toolbar__search {
+  position: relative;
+  width: min(100%, 440px);
+}
+.toolbar__search__icon {
+  position: absolute;
+  left: 0.9em;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555866;
+}
+.toolbar__search__input {
+  width: 100%;
+  border: 1px solid #c9cad8;
+  border-radius: 9px;
+  padding: 0.8em 1em;
+  background-color: #ffffff;
+}
+.toolbar__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75em;
+}
+.toolbar__filters__select {
+  min-width: 170px;
+  appearance: none;
+  border: 1px solid #c9cad8;
+  border-radius: 9px;
+  background-color: #ffffff;
+  padding: 0.75em 2.7em 0.75em 0.9em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23555866' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8em center;
+}
+
+.panel {
+  overflow: hidden;
+  margin-bottom: 1.5em;
+}
+.panel__header {
+  min-height: 58px;
+  padding: 0 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f3f1fa;
+  border-bottom: 1px solid #c9cad8;
+}
+.panel__header__title {
+  font-size: 1.2em;
+  font-weight: 800;
+}
+.panel__header__link {
+  color: #3659d9;
+  font-weight: 700;
+}
+.panel__tableContainer {
+  overflow-x: auto;
+}
+.panel__footer {
+  min-height: 60px;
+  padding: 0 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #555866;
+  background-color: #faf9ff;
+  border-top: 1px solid #c9cad8;
+}
+
+.ticketsTable {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+}
+.ticketsTable th,
+.ticketsTable td {
+  padding: 1.05em 1em;
+  text-align: left;
+  border-bottom: 1px solid #c9cad8;
+}
+.ticketsTable th {
+  background-color: #e8e7f1;
+  color: #3f4250;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.ticketsTable tbody tr:hover {
+  background-color: #fafaff;
+}
+.ticketsTable__title {
+  font-weight: 700;
+}
+.ticketsTable__title__reporter {
+  margin-top: 0.3em;
+  color: #555866;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+}
+.pagination__button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 7px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.pagination__button:hover, .pagination__button--active {
+  color: #3659d9;
+  background-color: #e0e7ff;
+}
+
+.formCard {
+  max-width: 850px;
+  padding: 2em;
+  background-color: #ffffff;
+  border: 1px solid #c9cad8;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(30, 32, 50, 0.08);
+}
+
+.ticketLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 1.5em;
+}
+.ticketLayout__main {
+  min-width: 0;
+}
+
+.ticketHeader {
+  padding: 1.5em;
+  margin-bottom: 1.5em;
+}
+.ticketHeader__upper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1em;
+}
+.ticketHeader__upper__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em;
+  align-items: center;
+  margin-bottom: 0.65em;
+}
+.ticketHeader__upper__title {
+  max-width: 700px;
+  font-size: 1.65em;
+  font-weight: 800;
+}
+.ticketHeader__description {
+  margin-top: 1.25em;
+  padding: 1em;
+  background-color: #f2f0fa;
+  border: 1px solid #dddbe8;
+  border-radius: 10px;
+  color: #3d4050;
+  line-height: 1.55;
+}
+.ticketHeader__description__title {
+  margin-bottom: 0.5em;
+  color: #191a22;
+  font-weight: 800;
+}
+
+.chat {
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #c9cad8;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.chat__header {
+  min-height: 60px;
+  padding: 0 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f2fb;
+  border-bottom: 1px solid #c9cad8;
+}
+.chat__header__title {
+  font-weight: 800;
+  font-size: 1.1em;
+}
+.chat__messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4em;
+  padding: 1.5em;
+  background-color: #fbfaff;
+}
+.chat__message {
+  max-width: 75%;
+  display: flex;
+  gap: 0.75em;
+}
+.chat__message__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e3e6ef;
+  color: #3659d9;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.chat__message__content__meta {
+  margin-bottom: 0.35em;
+  color: #555866;
+  font-size: 0.78em;
+}
+.chat__message__content__bubble {
+  padding: 0.85em 1em;
+  border-radius: 14px;
+  background-color: #ececf4;
+  line-height: 1.5;
+}
+.chat__reply {
+  padding: 1em;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75em;
+  border-top: 1px solid #c9cad8;
+}
+.chat__reply__textarea {
+  min-height: 90px;
+  resize: vertical;
+  border: 1px solid #c9cad8;
+  border-radius: 9px;
+  padding: 0.85em;
+  background-color: #fbfaff;
+}
+
+.ticketAside {
+  height: fit-content;
+  padding: 1.35em;
+}
+.ticketAside__title {
+  font-size: 1.25em;
+  font-weight: 800;
+  padding-bottom: 0.9em;
+  border-bottom: 1px solid #c9cad8;
+}
+.ticketAside__section {
+  padding: 1em 0;
+  border-bottom: 1px solid #c9cad8;
+}
+.ticketAside__section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.ticketAside__section__label {
+  color: #45506c;
+  font-size: 0.75em;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5em;
+}
+.ticketAside__section__value {
+  line-height: 1.45;
+}
+.ticketAside__section__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1em;
+}
+
+.emptyState {
+  padding: 3em 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  color: #555866;
+}
+.emptyState__icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 0.75em;
+  color: #3659d9;
+}
+.emptyState__title {
+  color: #191a22;
+  font-size: 1.15em;
+  font-weight: 800;
+  margin-bottom: 0.35em;
+}
+
+@media (max-width: 1050px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ticketLayout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 820px) {
+  .app__sidebar {
+    transform: translateX(-100%);
+  }
+  .app__sidebar--open {
+    transform: translateX(0);
+  }
+  .app__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    background-color: rgba(20, 22, 35, 0.45);
+  }
+  .app__overlay--active {
+    display: block;
+  }
+  .app__content {
+    width: 100%;
+    margin-left: 0;
+  }
+  .app__topbar {
+    padding: 0 1em;
+  }
+  .app__topbar__left__menuButton {
+    display: flex;
+  }
+  .app__topbar__right__profile__textBox, .app__topbar__right__separator {
+    display: none;
+  }
+  .app__main {
+    padding: 1em;
+  }
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .toolbar__search {
+    width: 100%;
+  }
+}
+@media (max-width: 620px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  .app__main__welcome {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .form__row {
+    grid-template-columns: 1fr;
+  }
+  .formCard {
+    padding: 1.15em;
+  }
+  .panel__footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75em;
+    padding: 1em;
+  }
+  .chat__message {
+    max-width: 90%;
+  }
+  .chat__reply {
+    grid-template-columns: 1fr;
+  }
+  .loginOptions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+.form__error {
+  display: none;
+  color: #ba1a1a;
+  font-size: 0.85em;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.form__error--active {
+  display: block;
+}
+
+.toolbar__search__input::-webkit-search-cancel-button,
+.toolbar__search__input::-webkit-search-decoration,
+.toolbar__search__input::-webkit-search-results-button,
+.toolbar__search__input::-webkit-search-results-decoration {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.toolbar__search__input {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.loginPage__themeButton {
+  position: fixed;
+  top: 1.25em;
+  right: 1.25em;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #c9cad8;
+  border-radius: 50%;
+  color: #191a22;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 1.3em;
+}
+
+.themeIcon {
+  font-size: 1.25em;
+  line-height: 1;
+}
+
+body.darkMode {
+  color: #f2f4ff;
+  background-color: #11131a;
+}
+body.darkMode .loginPage {
+  background: radial-gradient(circle at top right, #232a43 0%, #11131a 48%, #171923 100%);
+}
+body.darkMode .loginPage__card,
+body.darkMode .loginPage__themeButton,
+body.darkMode .app__sidebar,
+body.darkMode .app__topbar,
+body.darkMode .app__main__welcome,
+body.darkMode .statsGrid__card,
+body.darkMode .toolbar,
+body.darkMode .panel,
+body.darkMode .ticketHeader,
+body.darkMode .ticketAside,
+body.darkMode .formCard,
+body.darkMode .chat,
+body.darkMode .toolbar__search__input,
+body.darkMode .toolbar__filters__select,
+body.darkMode .form__group__input,
+body.darkMode .form__group__textarea,
+body.darkMode .form__group__select,
+body.darkMode .secondaryButton {
+  color: #f2f4ff;
+  background-color: #1b1e28;
+  border-color: #343949;
+}
+body.darkMode .loginPage__bottom,
+body.darkMode .panel__header,
+body.darkMode .panel__footer,
+body.darkMode .ticketsTable thead,
+body.darkMode .ticketHeader__description,
+body.darkMode .chat__header,
+body.darkMode .chat__reply {
+  color: #f2f4ff;
+  background-color: #232733;
+  border-color: #343949;
+}
+body.darkMode .app__sidebar__navigation__link,
+body.darkMode .app__main__welcome__textBox__text,
+body.darkMode .ticketsTable__title__reporter,
+body.darkMode .statsGrid__card__upper__title,
+body.darkMode .statsGrid__card__note,
+body.darkMode .form__group__label,
+body.darkMode .panel__footer {
+  color: #b8bdca;
+}
+body.darkMode .app__sidebar__navigation__link:hover,
+body.darkMode .secondaryButton:hover {
+  background-color: #292e3b;
+}
+body.darkMode .app__sidebar__navigation__link--active {
+  color: #9fb0ff;
+  background-color: rgba(82, 112, 230, 0.2);
+}
+body.darkMode .ticketsTable td,
+body.darkMode .ticketsTable th,
+body.darkMode .app__topbar,
+body.darkMode .app__sidebar,
+body.darkMode .panel__header,
+body.darkMode .panel__footer,
+body.darkMode .chat__header,
+body.darkMode .chat__reply {
+  border-color: #343949;
+}
+body.darkMode input::placeholder,
+body.darkMode textarea::placeholder {
+  color: #858b99;
+}
+
+/* Ticket assignment and pagination states */
+.ticketAction {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ticketAction__assigned {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: #e5e7eb;
+  color: #6b7280;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ticketAction__assigned--mine {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.ticketAction__details {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #c4c5d5;
+  border-radius: 8px;
+  color: #2563eb;
+  background: #fff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.ticketAction__details:hover {
+  background: #eff6ff;
+}
+
+.ticketAction__details .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.emptyTableMessage {
+  text-align: center;
+  color: #757684;
+  padding: 32px !important;
+}
+
+.primaryButton--disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.primaryButton--disabled:hover {
+  background: #cbd5e1;
+}
+
+.assignmentInfo {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #e5e7eb;
+  color: #6b7280;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Widok wszystkich zgłoszeń przewija całą listę, podczas gdy nawigacja pozostaje na miejscu. */
+body[data-page=technician-all] .app__main {
+  padding-bottom: 3em;
+}
+
+body[data-page=technician-all] .panel__footer .pagination:empty {
+  display: none;
+}
+
+/* Uporządkowane sterowanie filtrami */
+.toolbar__filters {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.toolbar__filters__select {
+  min-width: 135px;
+  max-width: 155px;
+}
+
+.toolbar__filters__resetButton {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #c9cad8;
+  border-radius: 9px;
+  color: #3659d9;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+}
+.toolbar__filters__resetButton:hover, .toolbar__filters__resetButton:focus {
+  outline: none;
+  color: white;
+  background-color: #3659d9;
+  border-color: #3659d9;
+}
+.toolbar__filters__resetButton .icon {
+  width: 21px;
+  height: 21px;
+}
+
+/* Wiadomość zalogowanej osoby jest zawsze po prawej stronie. */
+.chat__message--own {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.chat__message--own .chat__message__content__bubble {
+  color: white;
+  background-color: #3659d9;
+}
+
+.chat__reply {
+  align-items: flex-end;
+}
+
+.chat__reply__textarea {
+  width: 100%;
+}
+
+.chat__reply .primaryButton {
+  align-self: flex-end;
+  min-height: 44px;
+}
+
+@media (max-width: 1180px) {
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .toolbar__search {
+    width: 100%;
+  }
+  .toolbar__filters {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 620px) {
+  .toolbar__filters__select {
+    flex: 1 1 135px;
+    max-width: none;
+  }
+  .chat__reply .primaryButton {
+    width: fit-content;
+  }
+}
+/* Pole odpowiedzi zaczyna od wysokości przycisku i rośnie wraz z treścią. */
+.chat__reply__textarea {
+  min-height: 44px;
+  max-height: 160px;
+  height: 44px;
+  resize: none;
+  overflow-y: hidden;
+  line-height: 1.35;
+}
+
+.chat__reply .primaryButton {
+  height: 44px;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+/* Krótkie wiadomości zachowują naturalną szerokość. */
+.chat__message__content {
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.chat__message__content__bubble {
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.chat__message--own .chat__message__content {
+  align-items: flex-end;
+}
+
+.ticketAction__button {
+  position: relative;
+}
+
+.ticketAction__notification {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 50%;
+  color: white;
+  background-color: tomato;
+  font-size: 0.72em;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+}
+
+/* Sterowanie statusem zgłoszenia przez przypisanego technika. */
+.ticketStatusControl {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+.ticketStatusControl__select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 2.5em 0 0.85em;
+  color: #191a22;
+  background-color: #ffffff;
+  border: 1px solid #c9cad8;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.ticketStatusControl__button {
+  width: 100%;
+}
+.ticketStatusControl__message {
+  min-height: 1.2em;
+  margin-top: 0.65em;
+  color: #137333;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+.statusBadge--unknown {
+  color: #5f6472;
+  background-color: #eceef3;
+}
+
+/* Projekt jest przygotowany wyłącznie dla widoku desktopowego. */
+html,
+body {
+  min-width: 1180px;
+}
+
+.app__sidebar {
+  transform: none !important;
+}
+
+.app__content {
+  width: calc(100% - 260px) !important;
+  margin-left: 260px !important;
+}
+
+.app__topbar__left__menuButton,
+.app__overlay {
+  display: none !important;
+}
+
+.ticketLayout {
+  grid-template-columns: minmax(0, 1fr) 330px !important;
+}
+
+.toolbar {
+  align-items: center !important;
+  flex-direction: row !important;
+}
+
+.toolbar__search {
+  width: 390px !important;
+}
+
+.toolbar__filters {
+  flex-wrap: nowrap !important;
+}
+
+.statsGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+.ticketAside__section--resolution {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.75em;
+}
+
+.resolutionConfirmation {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.75em;
+}
+.resolutionConfirmation__text {
+  color: #444653;
+  line-height: 1.45;
+}
+.resolutionConfirmation__button {
+  min-width: 88px;
+}
+
+.chat__empty {
+  width: 100%;
+  padding: 2em;
+  color: #757684;
+  text-align: center;
+  font-weight: 500;
+}
+
+/*# sourceMappingURL=main.css.map */
+
+.ticketsTable th:last-child,
+.ticketsTable td:last-child {
+  width: 230px;
+  min-width: 230px;
+}
+.ticketAction {
+  width: 100%;
+  min-width: 205px;
+  flex-wrap: nowrap;
+}

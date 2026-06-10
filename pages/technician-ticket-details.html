@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Szczegóły zgłoszenia - HelpDesk Pro</title>
+    <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link href="../sass/main.css" rel="stylesheet" />
+  </head>
+  <body data-page="technician-ticket-details" data-required-role="technician">
+    <div class="app">
+      <aside class="app__sidebar" id="sidebar">
+        <div class="app__sidebar__brand">
+          <div class="app__sidebar__brand__iconBox">
+            <svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#support"></use>
+            </svg>
+          </div>
+          <div class="app__sidebar__brand__textBox">
+            <h1 class="app__sidebar__brand__textBox__title">HelpDesk Pro</h1>
+            <p class="app__sidebar__brand__textBox__subtitle">
+              IT Support System
+            </p>
+          </div>
+        </div>
+        <nav class="app__sidebar__navigation">
+          <a
+            class="app__sidebar__navigation__link"
+            href="technician-dashboard.html"
+            ><svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#dashboard"></use></svg
+            ><span>Dashboard</span></a
+          ><a
+            class="app__sidebar__navigation__link app__sidebar__navigation__link--active"
+            href="technician-all-tickets.html"
+            ><svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#ticket"></use></svg
+            ><span>Wszystkie zgłoszenia</span></a
+          ><a
+            class="app__sidebar__navigation__link"
+            href="technician-assigned.html"
+            ><svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#user"></use></svg
+            ><span>Przypisane do mnie</span></a
+          >
+        </nav>
+        <div class="app__sidebar__footer">
+          <a class="app__sidebar__navigation__link" href="../index.html"
+            ><svg aria-hidden="true" class="icon">
+              <use href="../assets/icons.svg#logout"></use></svg
+            ><span>Wyloguj</span></a
+          >
+        </div>
+      </aside>
+      <div class="app__overlay" id="sidebarOverlay"></div>
+      <div class="app__content">
+        <header class="app__topbar">
+          <div class="app__topbar__left">
+            <button
+              aria-label="Otwórz menu"
+              class="app__topbar__left__menuButton"
+              id="menuButton"
+            >
+              <svg aria-hidden="true" class="icon">
+                <use href="../assets/icons.svg#menu"></use>
+              </svg>
+            </button>
+            <h2 class="app__topbar__left__title">Szczegóły zgłoszenia</h2>
+          </div>
+          <div class="app__topbar__right">
+            <div class="app__topbar__right__separator"></div>
+            <div class="app__topbar__right__profile">
+              <div class="app__topbar__right__profile__textBox">
+                <p class="app__topbar__right__profile__textBox__name">
+                  Jan Kowalski
+                </p>
+                <p class="app__topbar__right__profile__textBox__role">
+                  Technik IT
+                </p>
+              </div>
+              <div class="app__topbar__right__profile__avatar">JK</div>
+            </div>
+          </div>
+        </header>
+        <main class="app__main"><div id="ticketDetailsContainer"></div></main>
+      </div>
+    </div>
+    <script src="../js/main.js" type="module"></script>
+  </body>
+</html>
