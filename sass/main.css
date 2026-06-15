@@ -226,7 +226,9 @@ textarea:focus-visible {
   resize: vertical;
 }
 .form__group__select {
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   padding-right: 3em;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23555866' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -451,6 +453,10 @@ textarea:focus-visible {
   border: 1px solid #c9cad8;
   font-weight: 800;
 }
+.app__topbar__right__profile__avatar .icon {
+  width: 22px;
+  height: 22px;
+}
 .app__main {
   width: 100%;
   max-width: 1450px;
@@ -588,7 +594,9 @@ textarea:focus-visible {
 }
 .toolbar__filters__select {
   min-width: 170px;
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   border: 1px solid #c9cad8;
   border-radius: 9px;
   background-color: #ffffff;
@@ -812,6 +820,7 @@ textarea:focus-visible {
 }
 
 .ticketAside {
+  height: -moz-fit-content;
   height: fit-content;
   padding: 1.35em;
 }
@@ -968,7 +977,8 @@ textarea:focus-visible {
 }
 
 .toolbar__search__input {
-  appearance: none;
+  -moz-appearance: none;
+       appearance: none;
   -webkit-appearance: none;
 }
 
@@ -1057,6 +1067,9 @@ body.darkMode .panel__footer,
 body.darkMode .chat__header,
 body.darkMode .chat__reply {
   border-color: #343949;
+}
+body.darkMode input::-moz-placeholder, body.darkMode textarea::-moz-placeholder {
+  color: #858b99;
 }
 body.darkMode input::placeholder,
 body.darkMode textarea::placeholder {
@@ -1229,6 +1242,7 @@ body[data-page=technician-all] .panel__footer .pagination:empty {
     max-width: none;
   }
   .chat__reply .primaryButton {
+    width: -moz-fit-content;
     width: fit-content;
   }
 }
@@ -1258,6 +1272,7 @@ body[data-page=technician-all] .panel__footer .pagination:empty {
 }
 
 .chat__message__content__bubble {
+  width: -moz-fit-content;
   width: fit-content;
   min-width: 0;
   max-width: 100%;
@@ -1394,15 +1409,15 @@ body {
   font-weight: 500;
 }
 
-/*# sourceMappingURL=main.css.map */
-
+/* Wider action column for technician assignment controls */
 .ticketsTable th:last-child,
 .ticketsTable td:last-child {
   width: 230px;
   min-width: 230px;
 }
+
 .ticketAction {
   width: 100%;
   min-width: 205px;
   flex-wrap: nowrap;
-}
+}/*# sourceMappingURL=main.css.map */

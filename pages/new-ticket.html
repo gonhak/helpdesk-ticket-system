@@ -69,14 +69,27 @@
             <div class="app__topbar__right__separator"></div>
             <div class="app__topbar__right__profile">
               <div class="app__topbar__right__profile__textBox">
-                <p class="app__topbar__right__profile__textBox__name">
-                  Jan Kowalski
+                <p
+                  class="app__topbar__right__profile__textBox__name"
+                  data-current-user-name
+                >
+                  —
                 </p>
-                <p class="app__topbar__right__profile__textBox__role">
-                  Użytkownik
+                <p
+                  class="app__topbar__right__profile__textBox__role"
+                  data-current-user-role
+                >
+                  —
                 </p>
               </div>
-              <div class="app__topbar__right__profile__avatar">JK</div>
+              <div
+                class="app__topbar__right__profile__avatar"
+                aria-hidden="true"
+              >
+                <svg class="icon">
+                  <use href="../assets/icons.svg#user"></use>
+                </svg>
+              </div>
             </div>
           </div>
         </header>

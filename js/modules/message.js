@@ -1,3 +1,5 @@
+import { getAccountName } from "./config.js";
+
 export class Message {
   constructor({
     id,
@@ -12,7 +14,7 @@ export class Message {
     this.id = id;
     this.ticketId = Number(ticketId);
     this.authorEmail = authorEmail;
-    this.authorName = authorName;
+    this.authorName = getAccountName(authorEmail, authorName);
     this.authorRole = authorRole;
     this.content = content;
     this.createdAt = createdAt;

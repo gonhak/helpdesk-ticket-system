@@ -528,6 +528,11 @@ textarea {
           color: $primary;
           border: 1px solid $border;
           font-weight: 800;
+
+          .icon {
+            width: 22px;
+            height: 22px;
+          }
         }
       }
     }

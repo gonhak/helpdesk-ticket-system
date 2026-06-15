@@ -6,6 +6,9 @@ export const TICKET_STATUSES = [
   "Zamknięte",
 ];
 
+// „Oczekuje na odpowiedź” jest statusem wyliczanym automatycznie na podstawie
+// nieprzeczytanych wiadomości. Technik nie ustawia go ręcznie.
+// „Zamknięte” może ustawić wyłącznie użytkownik po zaakceptowaniu rozwiązania.
 export const TECHNICIAN_STATUS_OPTIONS = ["W trakcie", "Zakończone"];
 
 export const FINISHED_TICKET_STATUSES = ["Zakończone", "Zamknięte"];

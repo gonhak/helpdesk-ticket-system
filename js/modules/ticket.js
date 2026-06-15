@@ -1,3 +1,4 @@
+import { getAccountName } from "./config.js";
 import { normalizeTicketStatus } from "./ticket-status.js";
 
 export class Ticket {
@@ -19,8 +20,8 @@ export class Ticket {
     this.priority = priority;
     this.status = normalizeTicketStatus(status);
     this.createdAt = createdAt;
-    this.reporter = reporter;
     this.ownerEmail = ownerEmail;
+    this.reporter = getAccountName(ownerEmail, reporter);
     this.assignedTo = assignedTo;
     this.description = description;
   }
