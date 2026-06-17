@@ -1,85 +1,35 @@
-import { messagesData } from "../../data/messages-data.js";
-import { Message } from "../modules/message.js";
+import { db } from "../firebase.js";
+import { collection, addDoc, query, where, onSnapshot, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-export class MessageRepository {
-  static storageKey = "helpDeskMessagesV15";
-
-  static getAll() {
-    const saved = localStorage.getItem(this.storageKey);
-
-    if (!saved) {
-      const messages = messagesData.map((message) => new Message(message));
-      this.saveAll(messages);
-      return messages;
-    }
-
-    return JSON.parse(saved).map((message) => new Message(message));
-  }
-
-  static saveAll(messages) {
-    localStorage.setItem(this.storageKey, JSON.stringify(messages));
-  }
-
-  static getByTicketId(ticketId) {
-    return this.getAll().filter(
-      (message) => message.ticketId === Number(ticketId),
-    );
-  }
-
-  static getUnreadCount(ticketId, readerEmail) {
-    return this.getByTicketId(ticketId).filter((message) => {
-      return (
-        message.authorEmail !== readerEmail &&
-        !message.readBy.includes(readerEmail)
-      );
-    }).length;
-  }
-
-  static markTicketAsRead(ticketId, readerEmail) {
-    const messages = this.getAll();
-    let hasChanges = false;
-
-    messages.forEach((message) => {
-      if (
-        message.ticketId !== Number(ticketId) ||
-        message.authorEmail === readerEmail
-      ) {
-        return;
-      }
-
-      if (!message.readBy.includes(readerEmail)) {
-        message.readBy.push(readerEmail);
-        hasChanges = true;
-      }
+export const addMessageToFirestore = async (ticketId, senderEmail, senderName, content) => {
+  try {
+    const messagesRef = collection(db, "messages");
+    await addDoc(messagesRef, {
+      ticketId: String(ticketId),
+      senderEmail: senderEmail,
+      senderName: senderName,
+      content: content,
+      createdAt: serverTimestamp()
     });
-
-    if (hasChanges) {
-      this.saveAll(messages);
-    }
+  } catch (error) {
+    console.error("Błąd podczas dodawania wiadomości:", error);
   }
+};
 
-  static removeByTicketId(ticketId) {
-    const messages = this.getAll().filter(
-      (message) => message.ticketId !== Number(ticketId),
-    );
-    this.saveAll(messages);
-  }
+export const subscribeToTicketMessages = (ticketId, callback) => {
+  const messagesRef = collection(db, "messages");
+  
+  const q = query(
+    messagesRef, 
+    where("ticketId", "==", String(ticketId)), 
+    orderBy("createdAt", "asc")
+  );
 
-  static add({ ticketId, authorEmail, authorName, authorRole, content }) {
-    const messages = this.getAll();
-    const message = new Message({
-      id: `m-${ticketId}-${Date.now()}`,
-      ticketId,
-      authorEmail,
-      authorName,
-      authorRole,
-      content,
-      createdAt: "Przed chwilą",
-      readBy: [authorEmail],
-    });
-
-    messages.push(message);
-    this.saveAll(messages);
-    return message;
-  }
-}
+  return onSnapshot(q, (snapshot) => {
+    const messages = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    callback(messages);
+  });
+};

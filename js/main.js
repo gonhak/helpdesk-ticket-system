@@ -14,8 +14,12 @@ initializeUserProfile();
 initializeLoginPage();
 initializeTicketsPage();
 initializeNewTicketPage();
-initializeTicketDetailsPage();
 initializeTechnicianDashboardPage();
+
+// Dodany .catch() wyłapie i wypisze w konsoli błędy pochodzące z asynchronicznego pobierania z Firebase
+initializeTicketDetailsPage().catch((error) => {
+  console.error("Błąd podczas ładowania szczegółów zgłoszenia:", error);
+});
 
 document.querySelectorAll('a[href="../index.html"]').forEach((link) => {
   link.addEventListener("click", () => {

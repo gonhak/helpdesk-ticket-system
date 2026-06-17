@@ -1,12 +1,6 @@
 import { Session } from "../modules/session.js";
-import { Ticket } from "../modules/ticket.js";
-import { TicketRepository } from "../services/ticket-repository.js";
-
-const generateTicketId = (tickets) => {
-  const ticketIds = tickets.map((ticket) => Number(ticket.id));
-
-  return Math.max(...ticketIds, 1000) + 1;
-};
+import { db } from "../firebase.js";
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 export const initializeNewTicketPage = () => {
   const form = document.querySelector("#newTicketForm");
@@ -15,33 +9,40 @@ export const initializeNewTicketPage = () => {
     return;
   }
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (Session.getRole() !== "user") {
       window.location.replace("technician-dashboard.html");
-
       return;
     }
 
-    const tickets = TicketRepository.getAll();
-    const id = generateTicketId(tickets);
     const description = document.querySelector("#description")?.value.trim();
+    const title = document.querySelector("#ticketTitle")?.value.trim();
+    const category = document.querySelector("#category")?.value;
+    const priority = document.querySelector("#priority")?.value;
 
-    const ticket = new Ticket({
-      id,
-      title: document.querySelector("#ticketTitle")?.value.trim(),
-      category: document.querySelector("#category")?.value,
-      priority: document.querySelector("#priority")?.value,
-      status: "Nowe",
-      createdAt: "Przed chwilą",
-      reporter: Session.getName(),
-      ownerEmail: Session.getEmail(),
-      assignedTo: null,
-      description,
-    });
+    try {
+      // Wskazujemy kolekcję "tickets" w Firestore
+      const ticketsRef = collection(db, "tickets");
+      
+      // Dodajemy nowy dokument z automatycznie wygenerowanym ID przez Firebase
+      await addDoc(ticketsRef, {
+        title: title,
+        category: category,
+        priority: priority,
+        status: "Nowe",
+        createdAt: serverTimestamp(), // Firebase sam nada dokładny czas serwera
+        reporter: Session.getName(),
+        ownerEmail: Session.getEmail(),
+        assignedTo: null,
+        description: description,
+      });
 
-    TicketRepository.add(ticket);
-    window.location.href = "my-tickets.html";
+      // Po udanym zapisie przenosimy użytkownika do jego zgłoszeń
+      window.location.href = "my-tickets.html";
+    } catch (error) {
+      console.error("Błąd podczas dodawania zgłoszenia do Firestore: ", error);
+    }
   });
 };
