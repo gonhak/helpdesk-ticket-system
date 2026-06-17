@@ -7,7 +7,6 @@ import { db } from "../firebase.js";
 import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { addMessageToFirestore, subscribeToTicketMessages } from "../services/message-repository.js";
 
-// Teraz ID to zwykły string, nie Number()
 const getTicketIdFromUrl = () => {
   return new URLSearchParams(window.location.search).get("id");
 };
@@ -27,32 +26,29 @@ const renderMessages = (messages, currentEmail) => {
     return '<p class="chat__empty">Brak wiadomości w tym zgłoszeniu.</p>';
   }
 
-  return messages
-    .map((message) => {
-      const isOwnMessage = message.senderEmail === currentEmail;
-      
-      let formattedDate = "Przed chwilą";
-      if (message.createdAt && message.createdAt.seconds) {
-        formattedDate = new Date(message.createdAt.seconds * 1000).toLocaleDateString("pl-PL", {
-          year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"
-        });
-      }
+  return messages.map((message) => {
+    const isOwnMessage = message.senderEmail === currentEmail;
+    let formattedDate = "Przed chwilą";
+    if (message.createdAt && message.createdAt.seconds) {
+      formattedDate = new Date(message.createdAt.seconds * 1000).toLocaleDateString("pl-PL", {
+        year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"
+      });
+    }
 
-      return `
-        <article class="chat__message${isOwnMessage ? " chat__message--own" : ""}">
-          <div class="chat__message__avatar">${initials(message.senderName)}</div>
-          <div class="chat__message__content">
-            <p class="chat__message__content__meta">
-              <strong>${message.senderName}</strong> · ${formattedDate}
-            </p>
-            <div class="chat__message__content__bubble">
-              ${message.content}
-            </div>
+    return `
+      <article class="chat__message${isOwnMessage ? " chat__message--own" : ""}">
+        <div class="chat__message__avatar">${initials(message.senderName)}</div>
+        <div class="chat__message__content">
+          <p class="chat__message__content__meta">
+            <strong>${message.senderName}</strong> · ${formattedDate}
+          </p>
+          <div class="chat__message__content__bubble">
+            ${message.content}
           </div>
-        </article>
-      `;
-    })
-    .join("");
+        </div>
+      </article>
+    `;
+  }).join("");
 };
 
 const renderStatusControl = (ticket, isTechnician, isAssignedToMe) => {
@@ -114,28 +110,38 @@ const renderResolutionConfirmation = (ticket, isTechnician) => {
 };
 
 export const initializeTicketDetailsPage = async () => {
+  console.log("[DEBUG 1] Funkcja initializeTicketDetailsPage została uruchomiona.");
+
   const isTechnician = Session.getRole() === "technician";
   const email = Session.getEmail();
   const tId = getTicketIdFromUrl();
 
-  if (!tId) return;
+  console.log("[DEBUG 2] Pobrano ID z paska adresu:", tId);
 
-  // Pobieramy dane ticketa z Firestore
+  if (!tId) {
+    console.error("[BŁĄD KRYTYCZNY] Brak parametru ?id= w linku! Skrypt nie wie co pobrać i przerywa działanie.");
+    return;
+  }
+
+  console.log("[DEBUG 3] Próba pobrania dokumentu z Firebase...");
   const ticketRef = doc(db, "tickets", tId);
   const ticketSnap = await getDoc(ticketRef);
 
   if (!ticketSnap.exists()) {
-    console.error("Zgłoszenie nie istnieje w bazie!");
+    console.error("[BŁĄD KRYTYCZNY] Dokument o podanym ID nie istnieje w bazie Firestore!");
     return;
   }
+  console.log("[DEBUG 4] Dokument pobrany poprawnie z Firebase!");
 
   const ticket = { id: ticketSnap.id, ...ticketSnap.data() };
 
   if (Session.getRole() === "user" && ticket.status === "Zamknięte") {
+    console.log("[DEBUG] Zgłoszenie zamknięte dla użytkownika, przekierowuję.");
     window.location.href = "my-tickets.html";
     return;
   }
 
+  console.log("[DEBUG 5] Szukanie kontenera w pliku HTML...");
   const container = document.querySelector("#ticketDetailsContainer") || (() => {
     const layout = document.querySelector(".ticketLayout");
     if (layout) {
@@ -145,7 +151,11 @@ export const initializeTicketDetailsPage = async () => {
     return null;
   })();
 
-  if (!container) return;
+  if (!container) {
+    console.error("[BŁĄD KRYTYCZNY] Plik HTML nie posiada diva z id='ticketDetailsContainer' ani klasy '.ticketLayout'. Skrypt nie ma gdzie narysować interfejsu!");
+    return;
+  }
+  console.log("[DEBUG 6] Kontener znaleziony! Rysowanie interfejsu...");
 
   const isAssignedToMe = ticket.assignedTo === email;
   const displayStatus = getTicketViewStatus(ticket, email);
@@ -225,7 +235,6 @@ export const initializeTicketDetailsPage = async () => {
     </section>
   `;
 
-  // --- Subskrypcja Wiadomości z Firestore ---
   subscribeToTicketMessages(ticket.id, (messages) => {
     document.querySelector("#chatMessages").innerHTML = renderMessages(messages, email);
   });
@@ -245,7 +254,6 @@ export const initializeTicketDetailsPage = async () => {
     });
   }
 
-  // Akcje Technika i Użytkownika - Aktualizacje w Firestore
   document.querySelector("#assignTicketButton")?.addEventListener("click", async () => {
     await updateDoc(ticketRef, { assignedTo: email, status: "W trakcie" });
     window.location.reload();
@@ -256,7 +264,6 @@ export const initializeTicketDetailsPage = async () => {
     if (!selectedStatus) return;
 
     await updateDoc(ticketRef, { status: selectedStatus });
-    
     if (selectedStatus === "Zakończone") {
       await addMessageToFirestore(ticket.id, email, Session.getName(), "Technik oznaczył zgłoszenie jako zakończone. Potwierdź, czy problem został rozwiązany.");
     }

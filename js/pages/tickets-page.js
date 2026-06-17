@@ -48,7 +48,7 @@ export const initializeTicketsPage = () => {
         <td><span class="status status--${ticket.status.toLowerCase().replace(" ", "-")}">${ticket.status}</span></td>
         <td>${formattedDate}</td>
         <td>
-          <a href="ticket-details.html?id=${ticket.id}" class="tableAction">
+          <a href="user-ticket-details.html?id=${ticket.id}" class="tableAction">
             Szczegóły
           </a>
         </td>
