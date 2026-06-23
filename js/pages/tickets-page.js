@@ -1,9 +1,20 @@
 import { subscribeToTickets } from "../services/ticket-repository.js";
-import { auth } from "../firebase.js";
+import { Session } from "../modules/session.js";
 
 export const initializeTicketsPage = () => {
   const tableBody = document.querySelector("#ticketsTableBody");
   if (!tableBody) return;
+
+  // Z którą stroną mamy do czynienia? (ustawione w atrybucie data-page w HTML)
+  // "my-tickets" | "technician-all" | "technician-assigned"
+  const page = document.body.dataset.page;
+  const isTechnician = Session.getRole() === "technician";
+  const myEmail = Session.getEmail();
+
+  // Technik otwiera szczegóły w swoim panelu, użytkownik w swoim.
+  const detailsPage = isTechnician
+    ? "technician-ticket-details.html"
+    : "user-ticket-details.html";
 
   // Renderowanie stanu ładowania danych
   tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center;">Ładowanie zgłoszeń z bazy danych...</td></tr>`;
@@ -12,22 +23,28 @@ export const initializeTicketsPage = () => {
   const unsubscribe = subscribeToTickets((tickets) => {
     tableBody.innerHTML = ""; // Czyszczenie tabeli przed ponownym renderowaniem
 
-    // Filtrowanie ticketów w kodzie, aby zalogowany użytkownik widział tylko swoje zgłoszenia
-    const currentUserEmail = auth.currentUser?.email;
-    const myTickets = tickets.filter(ticket => ticket.ownerEmail === currentUserEmail);
+    // Wybór zgłoszeń zależnie od strony i roli zalogowanej osoby:
+    let visibleTickets;
+    if (page === "technician-all") {
+      visibleTickets = tickets; // panel technika: wszystkie zgłoszenia
+    } else if (page === "technician-assigned") {
+      visibleTickets = tickets.filter((ticket) => ticket.assignedTo === myEmail); // przypisane do mnie
+    } else {
+      visibleTickets = tickets.filter((ticket) => ticket.ownerEmail === myEmail); // użytkownik: moje zgłoszenia
+    }
 
-    if (myTickets.length === 0) {
+    if (visibleTickets.length === 0) {
       tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center;">Brak zgłoszeń spełniających wybrane filtry.</td></tr>`;
-      
+
       const summary = document.querySelector("#paginationSummary");
       if (summary) summary.textContent = "Wyświetlanie 0 z 0 zgłoszeń";
       return;
     }
 
     // Renderowanie wierszy tabeli
-    myTickets.forEach((ticket) => {
+    visibleTickets.forEach((ticket) => {
       const row = document.createElement("tr");
-      
+
       // Bezpieczne formatowanie daty serwera Firebase
       let formattedDate = "Przed chwilą";
       if (ticket.createdAt && ticket.createdAt.seconds) {
@@ -36,7 +53,7 @@ export const initializeTicketsPage = () => {
           month: "2-digit",
           day: "2-digit",
           hour: "2-digit",
-          minute: "2-digit"
+          minute: "2-digit",
         });
       }
 
@@ -48,7 +65,7 @@ export const initializeTicketsPage = () => {
         <td><span class="status status--${ticket.status.toLowerCase().replace(" ", "-")}">${ticket.status}</span></td>
         <td>${formattedDate}</td>
         <td>
-          <a href="user-ticket-details.html?id=${ticket.id}" class="tableAction">
+          <a href="${detailsPage}?id=${ticket.id}" class="tableAction">
             Szczegóły
           </a>
         </td>
@@ -59,7 +76,7 @@ export const initializeTicketsPage = () => {
     // Aktualizacja licznika zgłoszeń w podsumowaniu
     const summary = document.querySelector("#paginationSummary");
     if (summary) {
-      summary.textContent = `Wyświetlanie 1 do ${myTickets.length} z ${myTickets.length} zgłoszeń`;
+      summary.textContent = `Wyświetlanie 1 do ${visibleTickets.length} z ${visibleTickets.length} zgłoszeń`;
     }
   });
 
